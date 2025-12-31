@@ -1,10 +1,12 @@
-const CACHE_NAME = 'study-points-v1';
+const CACHE_NAME = 'study-points-v2';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/app.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './styles.css',
+  './app.js',
+  './manifest.json',
+  './icon-192.svg',
+  './icon-512.svg'
 ];
 
 // Install event - cache files
