@@ -1,0 +1,62 @@
+═══════════════════════════════════════════════════════════════
+🚨 BACKEND DEPLOYMENT INSTRUCTIONS 🚨
+═══════════════════════════════════════════════════════════════
+
+Your gas-backend.gs file is CORRECT, but it needs to be deployed!
+
+STEP-BY-STEP DEPLOYMENT:
+═══════════════════════════════════════════════════════════════
+
+1. COPY THE CODE
+   - Open: gas-backend.gs (in VS Code)
+   - Select ALL code (Ctrl+A)
+   - Copy it (Ctrl+C)
+
+2. GO TO GOOGLE APPS SCRIPT
+   - Open: https://script.google.com
+   - Find your backend project
+   
+3. PASTE THE CODE
+   - DELETE all existing code in the editor
+   - PASTE the new code (Ctrl+V)
+   - Save (Ctrl+S)
+
+4. VERIFY THE CODE
+   Check these lines are CORRECT:
+   
+   ✓ Line 88: sheet.appendRow([newUsername, newPassword, 500, 0, timestamp, timestamp]);
+      (Should have 500 points, 0 leisure seconds)
+   
+   ✓ Line 111: leisureSeconds: Number(data[i][3]) || 0
+      (Should return leisureSeconds from column 3/index 3)
+   
+   ✓ Line 21: parseInt(e.parameter.leisureSeconds) || 0
+      (Should accept leisureSeconds parameter)
+
+5. DEPLOY WITH NEW VERSION
+   - Click: Deploy → Manage deployments
+   - Click: Edit icon (pencil) on your existing deployment
+   - Version: Select "New version"
+   - Description: "Added leisure seconds support"
+   - Click: DEPLOY
+   - Wait for "Deployment successful" message
+
+6. VERIFY URL IS SAME
+   Your URL should still be:
+   https://script.google.com/macros/s/AKfycbywYhqDzyjkgnh9gcLiHBhg7-pTigJK-brRS3UIb6vf-6S5ooVjoW6X_440eGv4wZ2Oiw/exec
+   
+   (If you get a NEW URL, you created a new deployment instead of updating!)
+
+7. TEST THE DEPLOYMENT
+   - Open: complete-test.html in your browser
+   - Click "RUN COMPLETE TEST"
+   - Check if Column D shows 3600
+
+═══════════════════════════════════════════════════════════════
+
+IMPORTANT: Use app.js (NOT app-old.js)
+
+The app.js file already has the correct URL and code.
+Do NOT modify app.js - it's already correct!
+
+═══════════════════════════════════════════════════════════════

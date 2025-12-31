@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4a4a4a">
+    <title>Study Point System</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login/Register Screen -->
+    <div id="auth-screen" class="screen active">
+        <div class="auth-container">
+            <h1>Study Point System</h1>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form">
+                <h2>Login</h2>
+                <input type="text" id="login-username" placeholder="Username" autocomplete="username">
+                <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+                <button onclick="login()">Login</button>
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Register</a></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="auth-form" style="display: none;">
+                <h2>Register</h2>
+                <input type="text" id="register-username" placeholder="Username" autocomplete="username">
+                <input type="password" id="register-password" placeholder="Password" autocomplete="new-password">
+                <input type="password" id="register-confirm-password" placeholder="Confirm Password" autocomplete="new-password">
+                <button onclick="register()">Register</button>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Screen -->
+    <div id="app-screen" class="screen">
+        <div class="app-container">
+            <!-- Home Tab -->
+            <div id="home-tab" class="tab-content active">
+                <div class="user-header">
+                    <span class="username-label">Username</span>
+                    <button class="edit-username-btn" onclick="editUsername()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="username-display" id="username-display"></div>
+
+                <div class="points-display">
+                    <div id="total-points">2,000 Pts</div>
+                </div>
+
+                <div class="session-info">
+                    <div id="points-gained">0 pts gained</div>
+                    <div id="timer-display">0:00</div>
+                </div>
+
+                <div class="timer-controls">
+                    <button class="play-btn" id="play-btn" onclick="toggleTimer()">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    <button class="power-btn" onclick="resetSession()">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                            <path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path>
+                            <line x1="12" y1="2" x2="12" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Shop Tab -->
+            <div id="shop-tab" class="tab-content">
+                <h2>Shop</h2>
+                
+                <div class="shop-item">
+                    <div class="shop-item-header">
+                        <h3>Swap Points for Leisure Time</h3>
+                        <p class="conversion-rate">2 Points = 1 Minute</p>
+                    </div>
+                    <div class="swap-controls">
+                        <input type="number" id="points-to-swap" placeholder="Enter points" min="0" step="2">
+                        <div class="swap-result" id="swap-result">= 0 minutes</div>
+                        <button class="shop-btn" onclick="swapPoints()">Swap Points</button>
+                    </div>
+                </div>
+
+                <div class="shop-item">
+                    <div class="shop-item-header">
+                        <h3>Achievement Bonus</h3>
+                        <p class="bonus-description">Add 500 points for completing achievements</p>
+                    </div>
+                    <button class="shop-btn achievement-btn" onclick="addAchievementPoints()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                            <circle cx="12" cy="8" r="7"></circle>
+                            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                        </svg>
+                        Add 500 Points
+                    </button>
+                </div>
+            </div>
+
+            <!-- Leisure Tab -->
+            <div id="leisure-tab" class="tab-content">
+                <h2>Leisure Time</h2>
+                
+                <div class="leisure-container">
+                    <div class="leisure-total">
+                        <span class="leisure-label">Total Leisure Time</span>
+                        <div class="leisure-time-display" id="leisure-time-display">0:00</div>
+                    </div>
+
+                    <div class="leisure-session">
+                        <span class="leisure-label">Current Session</span>
+                        <div class="leisure-timer-display" id="leisure-timer-display">0:00</div>
+                    </div>
+
+                    <div class="leisure-controls">
+                        <button class="leisure-btn" id="leisure-play-btn" onclick="toggleLeisureTimer()">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            <span>Start Leisure</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav">
+                <button class="nav-btn" onclick="switchTab('leisure')">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </button>
+                <button class="nav-btn active" onclick="switchTab('home')">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </button>
+                <button class="nav-btn" onclick="switchTab('shop')">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                </button>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Custom Modal -->
+    <div id="custom-modal" class="custom-modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Title</h3>
+            <p id="modal-message">Message</p>
+            <input type="text" id="modal-input" style="display: none;">
+            <div class="modal-buttons">
+                <button id="modal-confirm" class="modal-btn">OK</button>
+                <button id="modal-cancel" class="modal-btn cancel" style="display: none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
