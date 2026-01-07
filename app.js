@@ -475,8 +475,8 @@ async function editUsername() {
 // Shop Functions
 function updateSwapCalculation() {
     const points = parseInt(document.getElementById('points-to-swap').value) || 0;
-    const minutes = Math.floor(points / 2);
-    document.getElementById('swap-result').textContent = `= ${minutes} minutes`;
+    const seconds = Math.floor(points / 2);
+    document.getElementById('swap-result').textContent = `= ${seconds} seconds`;
 }
 
 async function swapPoints() {
@@ -493,19 +493,19 @@ async function swapPoints() {
     }
 
     if (pointsToSwap % 2 !== 0) {
-        await showAlert('Points must be an even number (2 points = 1 minute)', 'Error');
+        await showAlert('Points must be an even number (2 points = 1 second)', 'Error');
         return;
     }
 
-    const minutesGained = Math.floor(pointsToSwap / 2);
+    const secondsGained = Math.floor(pointsToSwap / 2);
     
-    const confirmed = await showConfirm(`Swap ${pointsToSwap} points for ${minutesGained} minutes of leisure time?`, 'Confirm Swap');
+    const confirmed = await showConfirm(`Swap ${pointsToSwap} points for ${secondsGained} seconds of leisure time?`, 'Confirm Swap');
     
     if (confirmed) {
         userData.points -= pointsToSwap;
-        userData.leisureMinutes += minutesGained;
+        userData.leisureMinutes += Math.floor(secondsGained / 60);
         // Add the new seconds to existing leisure seconds
-        userData.leisureSeconds = (userData.leisureSeconds || 0) + (minutesGained * 60);
+        userData.leisureSeconds = (userData.leisureSeconds || 0) + secondsGained;
         
         saveUserData();
         updateUI();
